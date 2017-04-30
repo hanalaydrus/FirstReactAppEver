@@ -10,72 +10,53 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  Alert,
+  Button
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import Home from './app/navigation/home';
+import CreatePost from './app/navigation/create-post';
+import ShowPost from './app/navigation/show-post';
 
-export default class FirstApp extends Component {
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
   render() {
-    return (
-      <View style={styles.container}>
-        <Image source={require('./bg.jpg')} style={styles.backgroundImage}>
-          <View style={styles.secondContainer}>
-            <View style={styles.shape} >
-              <Image source={require('./me.jpg')} style={styles.myPic}/>
-              <Text style={styles.welcome}>
-                Hana Alaydrus
-              </Text>
-              <Image source={require('./refactory.png')} style={styles.refactory}/>
-            </View>
-          </View>
-        </Image>
-      </View>
-    );
+    const { navigate } = this.props.navigation;
+    const onCreateButtonPressProps = () => {
+      navigate('CreatePost')
+    };
+    const onShowButtonPressProps = () => {
+      navigate('ShowPost')
+    };
+    return <Home onCreateButtonPress={onCreateButtonPressProps} onShowButtonPress={onShowButtonPressProps}/>;
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  secondContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  shape : {
-    width: 250,
-    height: 350,
-    backgroundColor: 'white',
-    elevation:10,
-    borderRadius:4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  myPic: {
-    width: 150,
-    height: 150,
-  },
-  refactory: {
-    width: 120,
-    height: 50,
-  },
-  welcome: {
-    fontWeight: 'bold',
-    fontSize: 23,
-    textAlign: 'center',
-    margin: 10,
-    paddingBottom: 20,
-  },
+class CreatePostScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Create Post',
+  };
+  render() {
+    return <CreatePost />
+  }
+}
 
+class ShowPostScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Show Post',
+  };
+  render() {
+    return <ShowPost />
+  }
+}
+
+const FirstApp = StackNavigator({
+  Home: { screen: HomeScreen },
+  CreatePost: { screen: CreatePostScreen },
+  ShowPost: { screen: ShowPostScreen },
 });
 
 AppRegistry.registerComponent('FirstApp', () => FirstApp);
